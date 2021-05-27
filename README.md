@@ -7,11 +7,19 @@ With this package we can check which .env variables are needed to run this proje
 
 <br>
 
+```
+composer require lamalamaNL/environment-preflight-check
+```
+then 
 
-1: composer require lamalamaNL/environment-preflight-check <br>
-2: php artisan vendor:publish --provider="Lamalama\PreflightCheck\PreflightChecksServiceProvider"
-3: for adding the check into composer install add this to your composer.json:<br> 
-<br>'"scripts": {
+```
+php artisan vendor:publish --provider="Lamalama\PreflightCheck\PreflightChecksServiceProvider"
+```
+
+for adding the check into composer install add this to your composer.json:<br> 
+
+```
+"scripts": {
 
         ...
 
@@ -20,5 +28,7 @@ With this package we can check which .env variables are needed to run this proje
         ],
 
         ...
-    },'
+    },
 
+
+```

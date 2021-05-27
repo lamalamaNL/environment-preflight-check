@@ -30,12 +30,6 @@ class PreflightCheckCommand extends Command
      */
     protected $description = 'Checks that the application is configured and aligned correctly to begin accepting requests.';
 
-    /**
-     * @psalm-var array<class-string>
-     */
-    protected array $preflightSteps = [];
-
-    protected Pipeline $pipeline;
 
     /**
      * Create a new command instance.
@@ -67,7 +61,9 @@ class PreflightCheckCommand extends Command
                 $output->getFormatter()->setStyle('fire', $outputStyle);
                 $output->writeln('<fire>[FAIL] Configuration: Missing Environment Values. For More Information use {--only-show-failures} flag.</>');
                 break;
-            } elseif ($onlyFails && env($check) === '') {
+            }
+
+            if ($onlyFails && env($check) === '') {
                 {
                     ++$failed;
                     $output->getFormatter()->setStyle('fire', $outputStyle);
@@ -80,70 +76,6 @@ class PreflightCheckCommand extends Command
             $output->getFormatter()->setStyle('fire', $outputStyle);
             $output->writeln('<fire>All Checks have passed, you can deploy!</>');
         }
-//                ;
-//        if ($onlyFails) {
-//            foreach ($checks as $check)
-//            {
-//
-//            }
-//
-//        }
-//dd($onlyFails);
-//        return $passed;
-//
-//        $onlyFails = $this->option('only-show-failures');
-//        $passed = $results->reduce(function ($carry, $result) use ($onlyFails) {
-//            $this->line(
-//                sprintf(
-//                    '[%s] %s: %s',
-//                    $result->passed() ? 'PASS' : 'FAIL',
-//                    $result->getName(),
-//                    $result->getMessage()
-//                ),
-//                $result->failed() ? 'error' : 'info',
-//                ($onlyFails && $result->passed()) ? OutputInterface::VERBOSITY_VERBOSE : null
-//            );
-//            $this->line(
-//                $result->getDisplayData() ?? '',
-//                null,
-//                $result->failed() ? null : OutputInterface::VERBOSITY_VERBOSE
-//            );
-//
-//            return ($result->skipped())
-//                ? $carry
-//                : $carry && $result->passed();
-//        }, true);
-//
-//        return $passed ? 0 : 1;
-    }
 
-    /**
-     * Boots the checks
-     */
-    protected function bootChecks()
-    {
-        $this->preflightSteps = config("preflight");
-//        $environment = strtolower(App::environment());
-
-//        try {
-//            if (! config()->has("preflight.checks.{$environment}")) {
-//                throw new NoPreflightChecksDefinedException("No preflight checks defined for this environment ({$environment})!");
-//            }
-//        } catch (InvalidArgumentException $exception) {
-//            // Catch for Laravel 6.x
-//            throw new NoPreflightChecksDefinedException("No preflight checks defined for this environment ({$environment})!");
-//        }
-//        foreach (config("preflight") as $class => $options) {
-//            if (is_numeric($class) && is_subclass_of($options, PreflightCheck::class, true)) {
-//                $class = $options;
-//                $options = [];
-//            }
-//
-//            if (is_array($options)) {
-//                $class = $options;
-//                $options = $options ?? [];
-//            }
-//            $this->preflightSteps[] = $options;
-//        }
     }
 }
