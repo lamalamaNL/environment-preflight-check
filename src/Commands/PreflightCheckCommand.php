@@ -51,7 +51,7 @@ class PreflightCheckCommand extends Command
         foreach ($checks as $check) {
             $outputStyle = new OutputFormatterStyle('black', 'red', ['bold', 'blink']);
 
-            if (!$onlyFails && env($check) === '') {
+            if (! $onlyFails && env($check) === '') {
                 $failed++;
                 $errors[] = $check;
             }
