@@ -22,5 +22,12 @@
             "Lamalama\\PreflightCheck\\": "src/"
         }
     },
+        "extra": {
+        "laravel": {
+            "providers": [
+                "Lamalama\PreflightCheck\PreflightChecksServiceProvider"
+            ]
+        }
+    },
     "require": {}
 }
