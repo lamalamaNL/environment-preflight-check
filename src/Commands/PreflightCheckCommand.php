@@ -24,7 +24,6 @@ class PreflightCheckCommand extends Command
      */
     protected $description = 'Checks that the application has all needed .env values';
 
-
     /**
      * Create a new command instance.
      *
@@ -42,7 +41,7 @@ class PreflightCheckCommand extends Command
      */
     public function handle()
     {
-        $checks = config("preflight");
+        $checks = config('preflight');
         $this->info('Starting Preflight Checks');
         $output = new ConsoleOutput();
         $onlyFails = $this->option('only-show-failures');
@@ -53,24 +52,22 @@ class PreflightCheckCommand extends Command
             $outputStyle = new OutputFormatterStyle('black', 'red', ['bold', 'blink']);
 
             if (!$onlyFails && env($check) === '') {
-                ++$failed;
+                $failed++;
                 $errors[] = $check;
             }
         }
-            if ($errors) {
-                $output->getFormatter()->setStyle('fire', $outputStyle);
-                $output->writeln('<fire>[FAIL] Configuration: Missing Environment Values.</>');
-                foreach ($errors as $error) {
-                    $output->writeln("<fire>$error</fire>");
-                }
-
+        if ($errors) {
+            $output->getFormatter()->setStyle('fire', $outputStyle);
+            $output->writeln('<fire>[FAIL] Configuration: Missing Environment Values.</>');
+            foreach ($errors as $error) {
+                $output->writeln("<fire>$error</fire>");
             }
+        }
 
         if ($failed === 0) {
             $outputStyle = new OutputFormatterStyle('black', 'green', ['bold', 'blink']);
             $output->getFormatter()->setStyle('fire', $outputStyle);
             $output->writeln('<fire>All Checks have passed, you can deploy!</>');
         }
-
     }
 }
