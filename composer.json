@@ -17,5 +17,10 @@
             "email": "moubarak@lamalama.nl"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Lamalama\\PreflightCheck\\": "src/"
+        }
+    },
     "require": {}
 }
