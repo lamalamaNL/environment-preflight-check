@@ -1,0 +1,11 @@
+{
+    "name": "lamalama/preflight-check",
+    "description": "A package to check if the needed environment variables has been set",
+    "authors": [
+        {
+            "name": "Moubarak Hayal",
+            "email": "moubarak@lamalama.nl"
+        }
+    ],
+    "require": {}
+}

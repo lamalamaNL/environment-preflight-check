@@ -3,14 +3,8 @@
 namespace Lamalama\PreflightCheck\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Facades\App;
-use InvalidArgumentException;
-use Lamalama\PreflightCheck\Checks\PreflightCheck;
-use Lamalama\PreflightCheck\Exceptions\NoPreflightChecksDefinedException;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class PreflightCheckCommand extends Command
 {
@@ -28,7 +22,7 @@ class PreflightCheckCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Checks that the application is configured and aligned correctly to begin accepting requests.';
+    protected $description = 'Checks that the application has all needed .env values';
 
 
     /**
@@ -53,24 +47,25 @@ class PreflightCheckCommand extends Command
         $output = new ConsoleOutput();
         $onlyFails = $this->option('only-show-failures');
         $failed = 0;
+        $errors = [];
+
         foreach ($checks as $check) {
             $outputStyle = new OutputFormatterStyle('black', 'red', ['bold', 'blink']);
 
             if (!$onlyFails && env($check) === '') {
                 ++$failed;
-                $output->getFormatter()->setStyle('fire', $outputStyle);
-                $output->writeln('<fire>[FAIL] Configuration: Missing Environment Values. For More Information use {--only-show-failures} flag.</>');
-                break;
-            }
-
-            if ($onlyFails && env($check) === '') {
-                {
-                    ++$failed;
-                    $output->getFormatter()->setStyle('fire', $outputStyle);
-                    $output->writeln('<fire>' . $check . ' Has no value</>');
-                }
+                $errors[] = $check;
             }
         }
+            if ($errors) {
+                $output->getFormatter()->setStyle('fire', $outputStyle);
+                $output->writeln('<fire>[FAIL] Configuration: Missing Environment Values.</>');
+                foreach ($errors as $error) {
+                    $output->writeln("<fire>$error</fire>");
+                }
+
+            }
+
         if ($failed === 0) {
             $outputStyle = new OutputFormatterStyle('black', 'green', ['bold', 'blink']);
             $output->getFormatter()->setStyle('fire', $outputStyle);
