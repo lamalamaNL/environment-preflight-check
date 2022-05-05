@@ -12,7 +12,7 @@ With this package we can check which .env variables are needed to run this proje
 <br>
 
 ```
-composer require lamalamaNL/environment-preflight-check
+composer require lamalama/preflight-check
 ```
 then 
 
