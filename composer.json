@@ -1,7 +1,17 @@
 {
     "name": "lamalama/preflight-check",
     "description": "A package to check if the needed environment variables has been set",
+    "keywords": [
+        "laravel",
+        "env",
+        "veribales"
+    ],
+    "license": "MIT",
     "authors": [
+        {
+            "name": "Lama Lama BV",
+            "email": "info@lamalama.nl"
+        },
         {
             "name": "Moubarak Hayal",
             "email": "moubarak@lamalama.nl"
